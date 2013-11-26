@@ -17,6 +17,7 @@ class CalendarModel {
 
     public CalendarModel() {
         events = new HashSet<>();
+        //events may become TreeSet later, if sorting as TreeSet is easier.
     }
 
     public static String getWeekdayShortName(int weekDay) {
@@ -67,6 +68,6 @@ class CalendarModel {
     }
 
     public void addEvents(File input) {
-        //Add events from input file. Use addEvent(CalendarEvent) for each event in the inpit file.
+        //Add events from input file. Use addEvent(CalendarEvent) for each event in the input file.
     }
 }

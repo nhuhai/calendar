@@ -8,7 +8,7 @@ import java.util.GregorianCalendar;
  * @author Roberto Villasenor
  * @author Hai Nguyen
  */
-class CalendarEvent {
+class CalendarEvent implements Comparable<CalendarEvent> {
 
     private String name;
     private Calendar startDate, endDate;
@@ -21,11 +21,16 @@ class CalendarEvent {
         repeating = false;
     }
 
-    public CalendarEvent(String name, Calendar startDate, Calendar endDate, boolean repeating) {
+    CalendarEvent(String name, Calendar startDate, Calendar endDate, boolean repeating) {
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.repeating = repeating;
+    }
+
+    @Override
+    public int compareTo(CalendarEvent o) {
+        return startDate.compareTo(o.startDate);
     }
 
     String getName() {
