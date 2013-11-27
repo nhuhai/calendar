@@ -1,73 +1,119 @@
 
 import java.io.File;
 import java.util.Calendar;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Set;
+import java.util.TreeSet;
 
 /**
+ * The CalendarModel contains a set of the CalendarEvents that a calendar can
+ * use.
  *
  * @author Christopher Raleigh
  * @author Roberto Villasenor
  * @author Hai Nguyen
  */
-class CalendarModel {
+public class CalendarModel {
 
-    private Set<CalendarEvent> events;
+    private TreeSet<CalendarEvent> events;
 
+    /**
+     * Constructs a new CalendarModel. The CalendarModel contains a set of the
+     * CalendarEvents that a calendar can use.
+     */
     public CalendarModel() {
-        events = new HashSet<>();
-        //events may become TreeSet later, if sorting as TreeSet is easier.
+        events = new TreeSet<>();
     }
 
+    /**
+     * Returns a two-letter abbreviation of the specified day of the week.
+     *
+     * @param weekDay the day of the week
+     * @return a two-letter abbreviation of the specified day of the week
+     */
     public static String getWeekdayShortName(int weekDay) {
-        String ret = "";
         switch (weekDay) {
             case Calendar.MONDAY:
-                ret = "Mo";
-                break;
+                return "Mo";
             case Calendar.TUESDAY:
-                ret = "Tu";
-                break;
+                return "Tu";
             case Calendar.WEDNESDAY:
-                ret = "We";
-                break;
+                return "We";
             case Calendar.THURSDAY:
-                ret = "Th";
-                break;
+                return "Th";
             case Calendar.FRIDAY:
-                ret = "Fr";
-                break;
+                return "Fr";
             case Calendar.SATURDAY:
-                ret = "Sa";
-                break;
+                return "Sa";
             case Calendar.SUNDAY:
-                ret = "Su";
-                break;
+                return "Su";
+            default:
+                return "";
         }
-        return ret;
     }
 
+    /**
+     * Adds the specified event.
+     *
+     * @param event the event
+     */
     public void addEvent(CalendarEvent event) {
-        boolean overlaps = false;
-        for (Iterator<CalendarEvent> it = events.iterator(); it.hasNext() && (overlaps == false);) {
+        //Checks that the start time is not after the end time.
+        if (event.getStartDate().compareTo(event.getEndDate()) > 0) {
+            //Viewer catches the exception and displays an error window.
+            throw new IllegalArgumentException();
+        }
+        /*Checks if events are overlapping.
+         The set must be sorted to work.*/
+        boolean done = false;
+        for (Iterator<CalendarEvent> it = events.iterator(); it.hasNext() && (done == false);) {
             CalendarEvent e = it.next();
-            if ((event.getStartDate().getTimeInMillis() <= e.
-                    getEndDate().getTimeInMillis()) && (event.
-                    getEndDate().getTimeInMillis() >= e.getStartDate().
-                    getTimeInMillis())) {
-                overlaps = true;
+            //If the new event starts after this event.
+            if (event.getStartDate().compareTo(e.getStartDate()) > 0) {
+                //If the new event starts during this event.
+                if (event.getStartDate().compareTo(e.getEndDate()) < 0) {
+                    //Viewer catches the exception and displays an error window.
+                    throw new IllegalArgumentException();
+                } else {
+                    done = true;
+                }
             }
         }
-        //Checked if events are overlapping. Make sure that viewer catches the following exception and displays an error window saying that the dates overlap
-        if (overlaps) {
-            throw new IllegalArgumentException();
-        } else {
-            events.add(event);
-        }
+        events.add(event);
     }
 
+    /**
+     * Removes the specified event from the CalendarModel.
+     *
+     * @param event the event
+     * @return whether the removal was successful
+     */
+    boolean removeEvent(CalendarEvent event) {
+        return events.remove(event);
+    }
+
+    /**
+     * Removes all events from the CalendarModel.
+     */
+    void clearEvents() {
+        events.clear();
+    }
+
+    /**
+     * Adds multiple events from the specified file.
+     *
+     * @param input the file
+     */
     public void addEvents(File input) {
-        //Add events from input file. Use addEvent(CalendarEvent) for each event in the input file.
+        /*Adds events from input file.
+         Uses addEvent(CalendarEvent) for each event in the input file.*/
+    }
+
+    /**
+     * Returns a TreeSet of the events stored in this CalendarModel.
+     *
+     * @return a TreeSet of the events stored in this CalendarModel
+     */
+    public TreeSet<CalendarEvent> getEvents() {
+        return events;
     }
 }
