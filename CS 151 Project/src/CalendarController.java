@@ -15,6 +15,7 @@ public class CalendarController
     private CalendarModel model;
     private CalendarEvent event;
     
+    
     /*
      * Listener for the Day View button
      */
