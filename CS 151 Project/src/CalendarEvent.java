@@ -57,7 +57,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
      *
      * @return the name of the event
      */
-    String getName() {
+    public String getName() {
         return name;
     }
 
@@ -66,7 +66,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
      *
      * @return the year of the event's start time
      */
-    int getYear() {
+    public int getYear() {
         return startDate.get(Calendar.YEAR);
     }
 
@@ -75,7 +75,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
      *
      * @return the month of the event's start time
      */
-    int getStartMonth() {
+    public int getStartMonth() {
         return startDate.get(Calendar.MONTH);
     }
 
@@ -84,7 +84,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
      *
      * @return
      */
-    int getEndMonth() {
+    public int getEndMonth() {
         return endDate.get(Calendar.MONTH);
     }
 
@@ -94,7 +94,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
      *
      * @return an ArrayList of each day of the week that the event spans
      */
-    ArrayList<Integer> getDays() {
+    public ArrayList<Integer> getDays() {
         Calendar temp = GregorianCalendar.getInstance();
         temp.setTime(startDate.getTime());
         ArrayList<Integer> ret = new ArrayList<>();
@@ -110,7 +110,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
      *
      * @return the hour of the event's start time
      */
-    int getStartTime() {
+    public int getStartTime() {
         return startDate.get(Calendar.HOUR_OF_DAY);
     }
 
@@ -119,7 +119,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
      *
      * @return the hour of the event's end time
      */
-    int getEndTime() {
+    public int getEndTime() {
         return endDate.get(Calendar.HOUR_OF_DAY);
     }
 
@@ -146,7 +146,7 @@ public class CalendarEvent implements Comparable<CalendarEvent> {
      *
      * @return whether the event repeats weekly
      */
-    boolean isRepeating() {
+    public boolean isRepeating() {
         return repeating;
     }
 }

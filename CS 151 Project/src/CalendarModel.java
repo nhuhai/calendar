@@ -1,8 +1,16 @@
 
+import java.io.BufferedReader;
 import java.io.File;
-import java.util.Calendar;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Scanner;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The CalendarModel contains a set of the CalendarEvents that a calendar can
@@ -29,26 +37,11 @@ public class CalendarModel {
      *
      * @param weekDay the day of the week
      * @return a two-letter abbreviation of the specified day of the week
+     * @deprecated The new method is CalendarStrings.getWeekdayShortName
      */
+    @Deprecated
     public static String getWeekdayShortName(int weekDay) {
-        switch (weekDay) {
-            case Calendar.MONDAY:
-                return "Mo";
-            case Calendar.TUESDAY:
-                return "Tu";
-            case Calendar.WEDNESDAY:
-                return "We";
-            case Calendar.THURSDAY:
-                return "Th";
-            case Calendar.FRIDAY:
-                return "Fr";
-            case Calendar.SATURDAY:
-                return "Sa";
-            case Calendar.SUNDAY:
-                return "Su";
-            default:
-                return "";
-        }
+        return CalendarStrings.getWeekdayShortName(weekDay);
     }
 
     /**
@@ -103,9 +96,25 @@ public class CalendarModel {
      *
      * @param input the file
      */
-    public void addEvents(File input) {
+    public void addEvents(File input) throws FileNotFoundException {
         /*Adds events from input file.
          Uses addEvent(CalendarEvent) for each event in the input file.*/
+        Scanner scanner = new Scanner(input);
+        String currentLine;
+        HashSet<CalendarEvent> newEvents = new HashSet<>();
+        while (scanner.hasNextLine()) {
+            currentLine = scanner.nextLine();
+            String[] elements = currentLine.split(";");
+            String name = elements[0];
+            int year = Integer.parseInt(elements[1]);
+            int startMonth = Integer.parseInt(elements[2]);
+            int endMonth = Integer.parseInt(elements[3]);
+            ArrayList<Integer> days = new ArrayList<>();
+            //Add days from elements[4].
+            int startTime = Integer.parseInt(elements[5]);
+            int endTime = Integer.parseInt(elements[6]);
+            //Add event.
+        }
     }
 
     /**
@@ -113,7 +122,7 @@ public class CalendarModel {
      *
      * @return a TreeSet of the events stored in this CalendarModel
      */
-    public TreeSet<CalendarEvent> getEvents() {
+    TreeSet<CalendarEvent> getEvents() {
         return events;
     }
 }
